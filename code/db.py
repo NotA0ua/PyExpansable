@@ -1,14 +1,13 @@
 import json, datetime
 
-# TODO: Make groups and date
 class DB:
-    def __init__(self, path="", file_name="db.json", indent=4):
+    def __init__(self, path="", file_name="db.json", indent=2):
         self.path = path + file_name
         self.indent = indent
 
         try:
             self.read()
-        except FileNotFoundError:
+        except:
             self.clear()
 
     def write(self, data: dict):
@@ -19,10 +18,20 @@ class DB:
         with open(self.path, "r") as f:
             return json.load(f)
 
-    def add(self, key: str, value):
+    def add(self, key: str, value, group="default"):
         file = self.read()
-        file[key] = value
+
+        today = str(datetime.date.today())
+        file[group] = {}
+        file[group][today] = {}
+
+        file[group][today][key] = value
         self.write(file)
 
     def clear(self):
         self.write({})
+
+
+db = DB()
+db.add("banana", 50)
+db.add("banana", 20, "market")
