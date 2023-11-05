@@ -1,4 +1,6 @@
-import json, datetime
+import datetime
+import json
+
 
 class DB:
     def __init__(self, path="", file_name="db.json", indent=2):
@@ -30,8 +32,3 @@ class DB:
 
     def clear(self):
         self.write({})
-
-
-db = DB()
-db.add("banana", 50)
-db.add("banana", 20, "market")
